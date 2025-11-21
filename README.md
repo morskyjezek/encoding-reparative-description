@@ -1,16 +1,24 @@
 # Encoding Reparative Description
 
-This repository contains code related to the "Encoding Reparative Description"
-project, which began in 2023 with a team of researchers at the
-[University of Michigan School of Information](https://www.si.umich.edu/),
-the [Bentley Historical Library](https://bentley.umich.edu/),
-and the University of Michigan's [Humanities Collaboratory](https://sites.lsa.umich.edu/collaboratory/).
+This repository began with code related to the "Encoding Reparative Description" project, which began in 2023 with a team of researchers at the [University of Michigan School of Information](https://www.si.umich.edu/), the [Bentley Historical Library](https://bentley.umich.edu/), and the University of Michigan's [Humanities Collaboratory](https://sites.lsa.umich.edu/collaboratory/). Over time, it was updated to work directly with the ArchivesSpace API rather than EADs to create a Key Word in Contect (KWIC) report and associated visulalizations to support management of repartive descrition efforts at scale.
+
+As of November 2025, we are cleaning up our repository and rewriting the code. Current functionality includes: 
+
+- Using a an optional list of relevant ArchivesSpace resources to parse finding aid "front matter" to create a dataset for the KWIC report.
+
+TODOs:
+
+- [ ] Redevelop KWIC report, or two: one for controlled vocabulary and one for free text fields.
+- [ ] Optionally redevelop visualizations. Past visualizaitons are included in the repository for reference.
+- [ ] Add functionality to parse entire resources.
 
 ## Usage
 
 ### Inputs
 
-There are two basic inputs for this tool, a **required** term list and an **optional** ArchivesSpace Resource ID list.
+There are two basic inputs for this tool, a **required** text file with a list of terms (in the "term-list" folder, using "terms-" prefix) and an **optional** ArchivesSpace Resource ID list (in the "resource-ids" folder, using a "resource_ids-" prefix.)
+
+#### Term Lists
 
 The required term list be a `.txt` file with one term per line, e.g.:
 
@@ -23,9 +31,11 @@ Burials
 ...
 ```
 
-See `terms-nativeAmerican.txt` and `terms-phillipines.txt` as examples.
+See "terms-nativeAmerican.txt," "terms-phillipines.txt," and "terms-MENA.txt" as examples.
 
-Optionally, you may also provide a second `.txt` file with one ArchivesSpace Resouce ID per line, e.g.:
+#### List of Resource IDs
+
+Optionally, you may also provide a text file with relevant ArchivesSpace Resouce IDs, one per line, e.g.:
 
 ```
 229
@@ -36,23 +46,18 @@ Optionally, you may also provide a second `.txt` file with one ArchivesSpace Res
 ...
 ```
 
-If the user does not provide a `.txt` file with a list of Resource IDs, the tool will parse ALL ArchivesSpace resources. Since this is so resource intensive, the tool defaults to expecting a `.txt` file.
+If the user does not provide a text file with a list of Resource IDs, the tool will parse ALL ArchivesSpace resources. Since this is so resource intensive, the tool defaults to expecting a text file.
 
 ### Parse Resources
 
-Run the `parse_resources.ipynb` Python notebook first. It takes the inputs above, along with a configuration file described in the notebook, and uses them to parse ArchivesSpace via the API. It produces a `.csv` file used in later operations--see `results-nativeAmerican.csv` and `results.phillipines.csv` as examples.
+Run the `parse_resources.ipynb` Python notebook first. It takes the inputs above, along with a configuration file described in the notebook, and uses them to parse ArchivesSpace via the API. It produces data (a CSV file) used in later operations, and puts them in a "data" folder--see `results-nativeAmerican.csv` and `results.phillipines.csv` as examples.
 
 ### Create a Terms in Context Report or Visualizations (or both)
 
-#### Terms in Context Report
+#### Key Words in Context Report
 
-_Note that `kwic_report.ipynb` has been deprecated._ Run the `key_term_in_context.ipynb` Python notebook to create a key term in context report from the results. See `matched_results-nativeAmerican.csv` and `matched_results-phillipines.csv` as examples.
+Forthcoming...
 
 #### Visualizations
 
-_Note that `visualize_matches.ipynb` has been deprecated. I think._ Run the `match_visualize.ipynb` Python notebook (or its companion, `match_visualize.html`) to create visualizations from the results. Optionally, save individual visualizations as `.png` files. See the following examples:
-
-- `element_frequency_accross_dfs`
-- `element_frequency_accross_dfs_stacked`
-- `term_frequency_by_repo`
-- `term_frequency_by_repo_horizbar`
+Forthcoming, although past visualizations are retained for reference purposes in the "visualizaitons" folder.
