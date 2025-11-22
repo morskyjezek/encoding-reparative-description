@@ -1,6 +1,6 @@
 ---
 title: "Creating a Keyword in Context (KWIC) Report"
-output: html_document
+output: rmarkdown::github_document
 ---
 
 This document explains how to create a KWIC report, which can be useful for scanning
