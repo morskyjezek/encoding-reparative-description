@@ -145,22 +145,115 @@ Then, run the function as in the following examples.
 
 The following reads in a csv to the `csv_file_path` variable, sorts by
 the `keyword` column, and outputs the result (a dataframe) to a variable
-called `kwic_df_by_keyword`. Then, using `write.csv()`, the
-`kwic_df_by_keyword` is saved to the named file.
+called `kwic_df_by_keyword`.
 
 ``` r
 # usage, sort by matched term
 kwic_df_by_keyword <- create_kwic_analysis(
-  csv_file_path = '~/Desktop/encoding-reparative-description/matched_results-philippines.csv',
+  csv_file_path = '~/Desktop/encoding-reparative-description/matched_results-lgbtq.csv',
   include_stats = FALSE,
   sort_by = "keyword"
 )
+```
 
-write.csv(kwic_df_by_keyword, file = 'philippine-findingaid-terms-sortby_kw.csv')
+    ## Loading required package: readr
+
+    ## Loading required package: quanteda
+
+    ## Package version: 4.3.1
+    ## Unicode version: 14.0
+    ## ICU version: 71.1
+
+    ## Parallel computing: disabled
+
+    ## See https://quanteda.io for tutorials and examples.
+
+    ## Loading required package: dplyr
+
+    ## 
+    ## Attaching package: 'dplyr'
+
+    ## The following objects are masked from 'package:stats':
+    ## 
+    ##     filter, lag
+
+    ## The following objects are masked from 'package:base':
+    ## 
+    ##     intersect, setdiff, setequal, union
+
+    ## Rows: 371 Columns: 5
+    ## ── Column specification ────────────────────────────────────────────────────────
+    ## Delimiter: ","
+    ## chr (5): Term, Occurrence (ead_ID), Tag, Collection, Context
+    ## 
+    ## ℹ Use `spec()` to retrieve the full column specification for this data.
+    ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
+
+Then, use `write.csv()` to save the `kwic_df_by_keyword` to the given
+file name.
+
+``` r
+write.csv(kwic_df_by_keyword, file = 'kwic_lgbtq-terms-sortby_kw.csv', row.names = FALSE)
+```
+
+### Generate “stats”
+
+Adding the `include_stats = TRUE` option will produce a second series of
+dataframes that provide an overview of the output, including summative
+information about the number of terms searched, number of documents (in
+this case, individual finding aids), and other information. To save this
+information, run with the `include_stats` option, then use an approach
+like the one illustrated below to save the additional “stats”:
+
+Create the KWIC analysis and assign it to `kwic_stats`:
+
+``` r
+# usage, as above, with "stats" output
+kwic_stats <- create_kwic_analysis(
+  csv_file_path = '~/Desktop/encoding-reparative-description/matched_results-philippines.csv',
+  include_stats = TRUE,
+  sort_by = "Keyword"
+)
+```
+
+    ## Rows: 183 Columns: 5
+    ## ── Column specification ────────────────────────────────────────────────────────
+    ## Delimiter: ","
+    ## chr (5): Term, Occurrence (ead_ID), Tag, Collection, Context
+    ## 
+    ## ℹ Use `spec()` to retrieve the full column specification for this data.
+    ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
+
+    ## Warning in create_kwic_analysis(csv_file_path = "~/Desktop/encoding-reparative-description/matched_results-philippines.csv", : Invalid sort column ' Keyword '. Available columns are:  Collection, docname, Tag, pattern, from, to, pre, keyword, post 
+    ## Defaulting to 'Collection'
+
+Write the results CSV:
+
+``` r
+write.csv(kwic_stats$results,
+          file = 'kwic_philippine-terms-sortby_kw.csv',
+          row.names = FALSE)
+```
+
+Finally, write the various stats outputs, saved to CSV:
+
+``` r
+# Write all stats to separate files
+write.csv(as.data.frame(kwic_stats$summary_stats$matches_per_collection), 
+          file = 'kwic_stats-philippine-matches-per-collection.csv', row.names = FALSE)
+
+write.csv(as.data.frame(kwic_stats$summary_stats$matches_per_tag), 
+          file = 'kwic_stats-philippine-matches-per-tag.csv', row.names = FALSE)
+
+write.csv(as.data.frame(kwic_stats$summary_stats$keyword_by_collection), 
+          file = 'kwic_stats-philippine-keyword-by-collection.csv', row.names = FALSE)
+
+write.csv(as.data.frame(kwic_stats$summary_stats$keyword_by_tag), 
+          file = 'kwic_stats-philippine-keyword-by-tag.csv', row.names = FALSE)
 ```
 
 ### Other options
 
-- sort by EAD tag
+- sort by EAD tag (parent tag for the matched result)
+- sort by Collection name (name of finding aid)
 - create a dataframe some other use
-- produce ‘stats’ (overview of some results)
