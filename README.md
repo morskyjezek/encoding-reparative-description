@@ -56,4 +56,4 @@ Forthcoming...
 
 #### Visualizations
 
-Forthcoming, although past visualizations are retained for reference purposes in the "visualizaitons" folder.
+Forthcoming, although past visualizations are retained for reference purposes in the "visualizations" folder.
