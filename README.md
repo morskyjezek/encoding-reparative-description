@@ -6,11 +6,7 @@ As of November 2025, we are cleaning up our repository and rewriting the code. C
 
 - Using a an optional list of relevant ArchivesSpace resources to parse finding aid "front matter" to create a dataset for the KWIC report.
 
-TODOs:
-
-- [ ] Redevelop KWIC report, or two: one for controlled vocabulary and one for free text fields.
-- [ ] Optionally redevelop visualizations. Past visualizaitons are included in the repository for reference.
-- [ ] Add functionality to parse entire resources.
+Additional TODOs should be added as a repo Issue.
 
 ## Usage
 
@@ -50,7 +46,7 @@ If the user does not provide a text file with a list of Resource IDs, the tool w
 
 ### Parse Resources
 
-Run the `parse_resources.ipynb` Python notebook first. It takes the inputs above, along with a configuration file described in the notebook, and uses them to parse ArchivesSpace via the API. It produces data (a CSV file) used in later operations, and puts them in a "data" folder--see `results-nativeAmerican.csv` and `results.phillipines.csv` as examples.
+Run the `parse_resources.ipynb` Python notebook first. It takes the inputs above, along with a configuration file described in the notebook, and uses them to parse ArchivesSpace via the API. It produces data (a CSV file) used in later operations, and puts them in a "data" folder--see `results-nativeAmerican.csv` and `results-phillipines.csv` as examples.
 
 ### Create a Terms in Context Report or Visualizations (or both)
 
@@ -60,4 +56,4 @@ Forthcoming...
 
 #### Visualizations
 
-Forthcoming, although past visualizations are retained for reference purposes in the "visualizaitons" folder.
+Forthcoming, although past visualizations are retained for reference purposes in the "visualizations" folder.
