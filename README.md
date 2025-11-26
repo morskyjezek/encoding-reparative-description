@@ -4,34 +4,18 @@ This repository began with code related to the "Encoding Reparative Description"
 
 As of November 2025, we are cleaning up our repository and rewriting the code. Current functionality includes: 
 
-- Using a an optional list of relevant ArchivesSpace resources to parse finding aid "front matter" to create a dataset for the KWIC report.
-
-Additional TODOs should be added as a repo Issue.
+1. With a Python notebook, use an optional list of relevant ArchivesSpace resources to parse finding aid "front matter" to create a "parsed results" dataset.
+2. With a Python notebook, look in parsed results for terms--provided separately--to create a "matched results" dataset.
+3. With R, create a KWIC report.
 
 ## Usage
 
-### Inputs
+### 1. Parse Results
 
-There are two basic inputs for this tool, a **required** text file with a list of terms (in the "term-list" folder, using "terms-" prefix) and an **optional** ArchivesSpace Resource ID list (in the "resource-ids" folder, using a "resource_ids-" prefix.)
+Run the "parse_resources.ipynb" Python notebook first. It takes an optional input of Resource IDs, described below, along with a configuration file described in the notebook, and uses them to parse ArchivesSpace via the API. It produces parsed results (a CSV file) used in later operations, and puts them in a "data" folder--see "parsed_results_*_nativeAmerican.csv" and "parsed_results_*_phillipines.csv" as examples.
 
-#### Term Lists
-
-The required term list be a `.txt` file with one term per line, e.g.:
-
-```
-Civilization
-Civilized
-Uncivilized
-Burial
-Burials
-...
-```
-
-See "terms-nativeAmerican.txt," "terms-phillipines.txt," and "terms-MENA.txt" as examples.
-
-#### List of Resource IDs
-
-Optionally, you may also provide a text file with relevant ArchivesSpace Resouce IDs, one per line, e.g.:
+**Filename:** parse_resource.ipynb
+**Input:** Optionally, you may also provide a text file with relevant ArchivesSpace Resouce IDs, one per line, e.g.:
 
 ```
 229
@@ -44,16 +28,25 @@ Optionally, you may also provide a text file with relevant ArchivesSpace Resouce
 
 If the user does not provide a text file with a list of Resource IDs, the tool will parse ALL ArchivesSpace resources. Since this is so resource intensive, the tool defaults to expecting a text file.
 
-### Parse Resources
+**Output:** A "parsed_results" CSV file in the "data" folder used in "match_terms.ipynb."
 
-Run the `parse_resources.ipynb` Python notebook first. It takes the inputs above, along with a configuration file described in the notebook, and uses them to parse ArchivesSpace via the API. It produces data (a CSV file) used in later operations, and puts them in a "data" folder--see `results-nativeAmerican.csv` and `results-phillipines.csv` as examples.
+### 2. Match Terms
 
-### Create a Terms in Context Report or Visualizations (or both)
+Run the "match_terms.ipynb" Python notebook next. It takes a "parsed_results" CSV file and a list of terms to look for matches in ArchivesSpace data. It produces matched results (a CSV file) used in later operations, and puts them in the same "data" folder--see "matched_results_*_nativeAmerican.csv" and "matched_results_*_phillipines.csv" as examples.
 
-#### Key Words in Context Report
+**Filename:** parse_resource.ipynb
+**Input:** This script takes as an input the output of "parse_results.ipynb" above. The required term list must be a `.txt` file with one term per line, e.g.:
 
-Forthcoming...
+```
+Civilization
+Civilized
+Uncivilized
+Burial
+Burials
+...
+```
 
-#### Visualizations
+See "terms-nativeAmerican.txt," "terms-phillipines.txt," and "terms-MENA.txt" as examples.
 
-Forthcoming, although past visualizations are retained for reference purposes in the "visualizations" folder.
+**Output:** A "matched_results" CSV file, also in the "data" folder, used to create a KWIC report.
+
